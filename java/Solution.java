@@ -13,6 +13,29 @@ public class Solution {
   // Complete a função para retornar uma String com os IDs das propostas válidas no seguinte formato (separado por vírgula):
   // "52f0b3f2-f838-4ce2-96ee-9876dd2c0cf6,51a41350-d105-4423-a9cf-5a24ac46ae84,50cedd7f-44fd-4651-a4ec-f55c742e3477"
   public static String processMessages(List<String> messages) {
-    return "";
+    List<Proposal> Proposals = new ArrayList<Proposal>();
+
+    for (String line : messages) {
+      String[] attributes = line.split(",");
+      String[] eventAttributes = Arrays.copyOfRange(attributes, 0, 4);
+      String[] instanceAttributes = Arrays.copyOfRange(attributes, 5, attributes.length -1);
+      EventSchema eventSchema = EventSchema.valueOf(attributes[1]);
+
+      Event instance = null;
+      switch (eventSchema){
+        case proposal: instance = new EventProposal(eventAttributes, instanceAttributes); break;
+        case proponent: instance = new EventProponent(eventAttributes, instanceAttributes); break;
+        case warranty: instance = new EventWarranty(eventAttributes, instanceAttributes); break;
+        default: break;
+      }
+    }
+
+    String validProposalIds = new String();
+    for (Proposal p : Proposals){
+      if (p.IsValid()){
+        validProposalIds += p.getProposalId().toString();
+      }
+    }
+    return validProposalIds;
   }
 }
