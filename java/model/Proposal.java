@@ -2,7 +2,6 @@ package model;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class Proposal {
@@ -72,16 +71,16 @@ public class Proposal {
 
         // Deve haver exatamente 1 proponente principal por proposta
         //Todos os proponentes devem ser maiores de 18 anos
-        int mainProponents = 0;
+        int mainProponentsCount = 0;
         for (Proponent p : proponents.values()){
             if (p.getProponentAge() < 18){
                 return false;
             }
             if (p.isProponentMain()) {
-                mainProponents++;
+                mainProponentsCount++;
             }
         }
-        if (mainProponents > 1){
+        if (mainProponentsCount != 1){
             return  false;
         }
 

@@ -26,7 +26,7 @@ public class Proponent {
         this.proponentName = attributes[1];
         this.proponentAge = Integer.parseInt(attributes[2]);
         this.proponentMonthlyIncome = Double.parseDouble(attributes[3]);
-        this.proponentIsMain = Boolean.parseBoolean(attributes[0]);
+        this.proponentIsMain = Boolean.parseBoolean(attributes[4]);
     }
 
     public int getProponentAge() {

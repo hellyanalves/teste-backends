@@ -10,6 +10,7 @@ public class WarrantyEvent extends Event {
 
     public WarrantyEvent(String[] attributes, String[] eventWarrantyAttributes) {
         super(attributes);
+        this.eventWarrantyId = UUID.fromString(eventWarrantyAttributes[0]);
         this.eventWarranty = new Warranty(eventWarrantyAttributes);
     }
 

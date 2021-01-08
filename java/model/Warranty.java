@@ -26,6 +26,7 @@ public class Warranty {
         return true;
     }
 
+    public UUID getWarrantyId() {return warrantyId;}
     public Double GetWarrantyValue(){
         return this.warrantValue;
     }
