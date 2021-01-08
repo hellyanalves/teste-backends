@@ -65,6 +65,8 @@ public class Solution {
   public static String processMessages(List<String> messages) {
     List<UUID> processedEvents = new ArrayList<>();
     Map<UUID, Proposal> proposals = new HashMap<>();
+    List<Proposal> proposalList = new ArrayList<>();
+    Map<UUID, Integer> proposalListIndexes = new HashMap<>();
 
     for (String line : messages) {
       String[] attributes = line.split(",");
@@ -97,6 +99,9 @@ public class Solution {
       if(!processedEvents.contains(eventId)){
         UUID proposalId = UUID.fromString(attributes[4]);
         Proposal proposal = proposals.get(proposalId);
+        int index = proposalListIndexes.getOrDefault(proposalId, -1);
+        if(index>=0) proposalList.remove(index);
+
         Proposal newProposal = null;
         switch (eventSchema){
           case proposal: newProposal = handleProposalEvent((ProposalEvent) instance, proposal); break;
@@ -104,18 +109,22 @@ public class Solution {
           case proponent: newProposal = handleProponentEvent((ProponentEvent) instance, proposal); break;
           default: break;
         }
+        proposalList.add(newProposal);
+        proposalListIndexes.put(proposalId,proposalList.indexOf(newProposal));
         proposals.put(proposalId, newProposal);
         processedEvents.add(eventId);
       }
     }
 
-    String validProposalIds = new String();
-    for (Proposal p : proposals.values()){
+    List<String> validProposalIds = new ArrayList<>();
+    for (Proposal p : proposalList){
       if(p == null) continue;
       if (p.IsValid()){
-        validProposalIds += p.getProposalId().toString();
+        validProposalIds.add(p.getProposalId().toString());
       }
     }
-    return validProposalIds;
+    String validProposalIdsStr = String.join(",",validProposalIds);
+    System.out.println(validProposalIdsStr);
+    return validProposalIdsStr;
   }
 }

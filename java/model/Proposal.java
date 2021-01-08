@@ -126,7 +126,7 @@ public class Proposal {
         }
 
         // O empréstimo deve ser pago em no mínimo 2 anos e no máximo 15 anos
-        if (proposalMonthlyInstallments < 24 || proposalLoanValue > 180){
+        if (proposalMonthlyInstallments < 24 || proposalMonthlyInstallments > 180){
             return false;
         }
 
