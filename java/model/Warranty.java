@@ -1,3 +1,5 @@
+package model;
+
 import  java.util.UUID;
 public class Warranty {
     private UUID warrantyId;
@@ -14,5 +16,17 @@ public class Warranty {
         this.warrantyId = UUID.fromString(attributes[0]);
         this.warrantValue = Double.parseDouble(attributes[1]);
         this.warrantyProvince = Province.valueOf(attributes[2]);
+    }
+
+    public Boolean IsValid(){
+        // Validar estado
+        if (warrantyProvince == Province.PR || warrantyProvince == Province.SC || warrantyProvince == Province.RS){
+            return false;
+        }
+        return true;
+    }
+
+    public Double GetWarrantyValue(){
+        return this.warrantValue;
     }
 }
